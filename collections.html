@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — Grace House</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#fff;color:#333;padding:20px}
+h1{color:#c9a44c;margin-bottom:20px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+@media(min-width:768px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{border-radius:12px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.08);cursor:pointer}
+.card img{width:100%;height:240px;object-fit:cover}
+.card div{padding:10px}
+footer{padding:25px;background:#1a1a1a;color:white;text-align:center;margin-top:50px}
+footer a{color:white;margin:0 10px;text-decoration:none}
+</style>
+</head>
+<body>
+
+<h1>Fashion Collections</h1>
+<div class="grid">
+<script>
+for(let i=1;i<=40;i++){
+  document.write(`<div class='card'><img src='image${i}.jpg'><div><h4>Luxury Wear ${i}</h4><p>₦${15000+(i-1)*500}</p></div></div>`);
+}
+</script>
+</div>
+
+<footer>
+<p>© 2026 Grace House — Nigerian Luxury Fashion</p>
+<div>
+<a href="#">Instagram</a>|
+<a href="#">Facebook</a>|
+<a href="#">WhatsApp</a>
+</div>
+</footer>
+
+</body>
+</html>
