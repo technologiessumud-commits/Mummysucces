@@ -46,6 +46,7 @@ section{padding:80px 7%;opacity:0;transform:translateY(50px);animation:slideIn v
 .cart-btn{position:fixed;bottom:20px;right:20px;background:var(--gold);color:white;width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:1500}
 #cart{position:fixed;top:0;right:-100%;width:80%;height:100%;background:white;padding:20px;transition:.4s;overflow-y:auto;z-index:1500}
 #cart.active{right:0}
+.cart-close{position:absolute;top:10px;right:10px;font-size:26px;font-weight:bold;color:#333;cursor:pointer}
 .cart-item{display:flex;gap:10px;margin-bottom:15px}
 .cart-item img{width:60px;height:60px;border-radius:8px}
 
@@ -88,14 +89,17 @@ footer a{color:white;margin:0 10px;text-decoration:none}
 <div class="grid" id="grid"></div>
 </section>
 
+<!-- Cart -->
 <div class="cart-btn" onclick="toggleCart()">🛒</div>
 <div id="cart">
+<span class="cart-close" onclick="toggleCart()">×</span>
 <h2>Your Cart</h2>
 <div id="cartItems"></div>
 <h3>Total: ₦<span id="total">0</span></h3>
 <a href="checkout.html"><button style="width:100%;padding:14px;border:none;background:var(--gold);color:white;border-radius:8px">Proceed to Checkout</button></a>
 </div>
 
+<!-- Modal -->
 <div class="modal" id="modal">
 <div class="modal-content">
 <span class="modal-close" onclick="closeModal()">×</span>
@@ -132,12 +136,10 @@ let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 let selected=null;
 const grid=document.getElementById('grid');
 
-// Populate grid
 products.forEach((p,index)=>{
   grid.innerHTML+=`<div class='card' style='animation-delay:${index*0.05}s' onclick='openModal(${p.id})'><img src='${p.image}'><div><h4>${p.name}</h4><p>₦${p.price}</p></div></div>`;
 });
 
-// Modal functions
 function openModal(id){
   selected=products.find(p=>p.id===id);
   document.getElementById('modal').style.display='flex';
@@ -152,7 +154,6 @@ function closeModal(){
   document.body.style.overflow='auto';
 }
 
-// Add to cart
 function addToCart(){
   let size=document.getElementById('size').value;
   let qty=parseInt(document.getElementById('qty').value);
@@ -161,17 +162,15 @@ function addToCart(){
   closeModal();
 }
 
-// Cart functions
 function toggleCart(){
-  document.getElementById('cart').classList.toggle('active');
-  renderCart();
-  document.body.style.overflow = document.getElementById('cart').classList.contains('active') ? 'hidden' : 'auto';
+  const cartPanel=document.getElementById('cart');
+  cartPanel.classList.toggle('active');
+  document.body.style.overflow=cartPanel.classList.contains('active')?'hidden':'auto';
 }
 
-// Hamburger
 function toggleMenu(){
   nav.classList.toggle('active');
-  document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : 'auto';
+  document.body.style.overflow=nav.classList.contains('active')?'hidden':'auto';
 }
 
 function renderCart(){
