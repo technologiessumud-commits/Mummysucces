@@ -18,21 +18,12 @@ nav a{display:block;text-decoration:none;color:#333;font-size:18px;margin:18px 0
 nav.active{right:0}
 
 /* Hero Section */
-.hero{height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;background-size:cover;background-position:center;position:relative;animation:heroSlide 16s infinite linear;}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;background-size:cover;background-position:center;position:relative;transition:background-image 1s ease;}
 .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.45)}
 .hero *{z-index:2;color:white}
-.hero h1{font-size:38px;animation:fadeIn var(--animate-time) .2s forwards;opacity:0}
-.hero p{font-size:20px;animation:fadeIn var(--animate-time) .3s forwards;opacity:0}
-.hero button{margin-top:20px;padding:14px 28px;border:none;background:var(--gold);color:white;border-radius:30px;font-size:16px;animation:fadeIn var(--animate-time) .4s forwards;opacity:0}
-
-/* Hero Slide Animation */
-@keyframes heroSlide{
-0%{background-image:url('image1.jpg')}
-25%{background-image:url('image2.jpg')}
-50%{background-image:url('image3.jpg')}
-75%{background-image:url('image4.jpg')}
-100%{background-image:url('image1.jpg')}
-}
+.hero h1{font-size:38px;opacity:0;animation:fadeIn var(--animate-time) .2s forwards}
+.hero p{font-size:20px;opacity:0;animation:fadeIn var(--animate-time) .3s forwards}
+.hero button{margin-top:20px;padding:14px 28px;border:none;background:var(--gold);color:white;border-radius:30px;font-size:16px;opacity:0;animation:fadeIn var(--animate-time) .4s forwards}
 
 /* Sections & Products */
 section{padding:80px 7%;opacity:0;transform:translateY(50px);animation:slideIn var(--animate-time) forwards}
@@ -83,7 +74,8 @@ footer a{color:white;margin:0 10px;text-decoration:none}
 <a href="contact.html">Contact</a>
 </nav>
 
-<section class="hero">
+<!-- Hero Section -->
+<section class="hero" id="hero">
 <h1>African Luxury Fashion</h1>
 <p>Handcrafted elegance for queens</p>
 <button onclick="scrollToShop()">Shop Collection</button>
@@ -128,6 +120,17 @@ footer a{color:white;margin:0 10px;text-decoration:none}
 </footer>
 
 <script>
+// ---------- HERO SLIDES ----------
+const hero = document.getElementById('hero');
+const heroImages = ['image1.jpg','image2.jpg','image3.jpg','image4.jpg'];
+let heroIndex = 0;
+function changeHeroImage(){
+  hero.style.backgroundImage = `url(${heroImages[heroIndex]})`;
+  heroIndex = (heroIndex + 1) % heroImages.length;
+}
+changeHeroImage();
+setInterval(changeHeroImage,4000);
+
 // ---------- PRODUCTS ----------
 const products=[...Array(40)].map((_,i)=>({
   id:i+1,
