@@ -6,7 +6,7 @@
 <title>Collections — Grace House</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{background:#fff;color:#333;padding:20px}
+body{background:#fff;color:#333;padding:20px;overflow-x:hidden}
 h1{color:#c9a44c;margin-bottom:20px;text-align:center}
 
 /* Grid */
@@ -18,14 +18,15 @@ h1{color:#c9a44c;margin-bottom:20px;text-align:center}
 
 /* Modal */
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:2000}
-.modal-content{background:#fff;padding:20px;border-radius:14px;width:90%;max-width:420px}
+.modal-content{background:#fff;padding:20px;border-radius:14px;width:90%;max-width:420px;position:relative}
 .modal-content img{width:100%;border-radius:12px}
 .modal-content select,.modal-content input,.modal-content textarea{width:100%;padding:10px;margin:8px 0}
-.modal-content button{width:100%;padding:12px;background:#c9a44c;border:none;color:white;border-radius:8px;font-size:1rem}
+.modal-content button{width:100%;padding:12px;background:#c9a44c;border:none;color:white;border-radius:8px;font-size:1rem;cursor:pointer}
+.modal-close{position:absolute;top:10px;right:10px;font-size:22px;font-weight:bold;color:#333;cursor:pointer}
 
 /* Cart */
-.cart-btn{position:fixed;bottom:20px;right:20px;background:#c9a44c;color:white;width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
-#cart{position:fixed;top:0;right:-100%;width:80%;height:100%;background:white;padding:20px;transition:.4s;overflow-y:auto;z-index:999}
+.cart-btn{position:fixed;bottom:20px;right:20px;background:#c9a44c;color:white;width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:1500}
+#cart{position:fixed;top:0;right:-100%;width:80%;height:100%;background:white;padding:20px;transition:.4s;overflow-y:auto;z-index:1500}
 #cart.active{right:0}
 .cart-item{display:flex;gap:10px;margin-bottom:15px}
 .cart-item img{width:60px;height:60px;border-radius:8px}
@@ -40,6 +41,7 @@ footer a{color:white;margin:0 10px;text-decoration:none}
 <h1>Fashion Collections</h1>
 <div class="grid" id="grid"></div>
 
+<!-- Cart -->
 <div class="cart-btn" onclick="toggleCart()">🛒</div>
 <div id="cart">
 <h2>Your Cart</h2>
@@ -48,8 +50,10 @@ footer a{color:white;margin:0 10px;text-decoration:none}
 <a href="checkout.html"><button style="width:100%;padding:14px;border:none;background:#c9a44c;color:white;border-radius:8px">Proceed to Checkout</button></a>
 </div>
 
+<!-- Modal -->
 <div class="modal" id="modal">
 <div class="modal-content">
+<span class="modal-close" onclick="closeModal()">×</span>
 <img id="modalImg">
 <h3 id="modalName"></h3>
 <p id="modalPrice"></p>
@@ -88,14 +92,19 @@ products.forEach(p=>{
   grid.innerHTML+=`<div class='card' onclick='openModal(${p.id})'><img src='${p.image}'><div><h4>${p.name}</h4><p>₦${p.price}</p></div></div>`;
 });
 
-// Modal
+// Modal functions
 function openModal(id){
   selected=products.find(p=>p.id===id);
   document.getElementById('modal').style.display='flex';
+  document.body.style.overflow='hidden'; // Disable background scroll
   document.getElementById('modalImg').src=selected.image;
   document.getElementById('modalName').innerText=selected.name;
   document.getElementById('modalPrice').innerText='₦'+selected.price;
   document.getElementById('modalDesc').innerText=selected.description;
+}
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+  document.body.style.overflow='auto'; // Re-enable scroll
 }
 
 // Add to cart
@@ -104,11 +113,16 @@ function addToCart(){
   let qty=parseInt(document.getElementById('qty').value);
   cart.push({...selected,size,qty});
   saveCart();
-  document.getElementById('modal').style.display='none';
+  closeModal();
 }
 
 // Cart functions
-function toggleCart(){document.getElementById('cart').classList.toggle('active');renderCart();}
+function toggleCart(){
+  document.getElementById('cart').classList.toggle('active');
+  renderCart();
+  document.body.style.overflow = document.getElementById('cart').classList.contains('active') ? 'hidden' : 'auto';
+}
+
 function renderCart(){
   let html=''; let total=0;
   cart.forEach(i=>{
@@ -118,7 +132,12 @@ function renderCart(){
   document.getElementById('cartItems').innerHTML=html||'<p>Your cart is empty</p>';
   document.getElementById('total').innerText=total;
 }
-function saveCart(){localStorage.setItem('cart',JSON.stringify(cart));renderCart();}
+
+function saveCart(){
+  localStorage.setItem('cart',JSON.stringify(cart));
+  renderCart();
+}
+
 renderCart();
 </script>
 
