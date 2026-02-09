@@ -18,13 +18,14 @@ nav a{display:block;text-decoration:none;color:#333;font-size:18px;margin:18px 0
 nav.active{right:0}
 
 /* Hero Section */
-.hero{height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;background-size:cover;background-position:center;position:relative;opacity:0;transform:translateY(50px);animation:slideIn var(--animate-time) forwards;}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;background-size:cover;background-position:center;position:relative;animation:heroSlide 16s infinite linear;}
 .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.45)}
 .hero *{z-index:2;color:white}
 .hero h1{font-size:38px;animation:fadeIn var(--animate-time) .2s forwards;opacity:0}
+.hero p{font-size:20px;animation:fadeIn var(--animate-time) .3s forwards;opacity:0}
 .hero button{margin-top:20px;padding:14px 28px;border:none;background:var(--gold);color:white;border-radius:30px;font-size:16px;animation:fadeIn var(--animate-time) .4s forwards;opacity:0}
 
-/* Hero background animation */
+/* Hero Slide Animation */
 @keyframes heroSlide{
 0%{background-image:url('image1.jpg')}
 25%{background-image:url('image2.jpg')}
@@ -82,7 +83,7 @@ footer a{color:white;margin:0 10px;text-decoration:none}
 <a href="contact.html">Contact</a>
 </nav>
 
-<section class="hero" style="animation:heroSlide 20s infinite linear;">
+<section class="hero">
 <h1>African Luxury Fashion</h1>
 <p>Handcrafted elegance for queens</p>
 <button onclick="scrollToShop()">Shop Collection</button>
