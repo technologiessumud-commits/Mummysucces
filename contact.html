@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Grace House</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#fff;color:#333;overflow-x:hidden}
+:root{--pink:#f7c6d9;--gold:#c9a44c;--dark:#1a1a1a;--animate-time:.6s}
+
+/* Header & Navigation */
+header{position:fixed;top:0;width:100%;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;background:white;z-index:1000;box-shadow:0 3px 10px rgba(0,0,0,.05)}
+.logo{font-weight:700;font-size:22px;color:var(--gold)}
+.menu{font-size:26px;cursor:pointer}
+nav{position:fixed;top:0;right:-100%;width:70%;height:100%;background:white;padding:60px 25px;transition:.4s;z-index:1200}
+nav a{display:block;text-decoration:none;color:#333;font-size:18px;margin:18px 0}
+nav.active{right:0}
+
+/* Sections & Form */
+section{padding:100px 7%;opacity:0;transform:translateY(50px);animation:slideIn var(--animate-time) forwards}
+h1,h2{color:var(--gold);text-align:center;margin-bottom:20px}
+form{max-width:500px;margin:0 auto;display:flex;flex-direction:column;gap:15px}
+form input,form textarea{padding:12px;border-radius:8px;border:1px solid #ccc;font-size:16px}
+form button{padding:14px;background:var(--gold);border:none;color:white;border-radius:8px;font-size:16px;cursor:pointer}
+form button:hover{opacity:.9}
+
+/* Footer */
+footer{padding:25px;background:var(--dark);color:white;text-align:center;margin-top:50px}
+footer a{color:white;margin:0 10px;text-decoration:none}
+
+@keyframes slideIn{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">Grace House</div>
+<div class="menu" onclick="toggleMenu()">☰</div>
+</header>
+
+<nav id="nav">
+<a href="index.html">Home</a>
+<a href="collections.html">Collections</a>
+<a href="about.html">About</a>
+<a href="booking.html">Book Sewing</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+<section>
+<h1>Contact Us</h1>
+<p style="text-align:center;margin-bottom:30px">Have questions? Send us a message and we’ll get back to you promptly.</p>
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="email" name="email" placeholder="Email Address" required>
+<input type="tel" name="phone" placeholder="Phone Number">
+<textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+<button type="submit">Send Message</button>
+</form>
+</section>
+
+<footer>
+<p>© 2026 Grace House — Nigerian Luxury Fashion</p>
+<div>
+<a href="#">Instagram</a>|
+<a href="#">Facebook</a>|
+<a href="#">WhatsApp</a>
+</div>
+</footer>
+
+<script>
+// Hamburger toggle
+function toggleMenu(){
+  nav.classList.toggle('active');
+  document.body.style.overflow=nav.classList.contains('active')?'hidden':'auto';
+}
+// Close hamburger on outside click
+document.addEventListener('click', function(e){
+  const nav = document.getElementById('nav');
+  if(nav.classList.contains('active') && !nav.contains(e.target) && !e.target.classList.contains('menu')){
+    nav.classList.remove('active');
+    document.body.style.overflow='auto';
+  }
+});
+</script>
+</body>
+</html>
